@@ -1,17 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import FoodList from './FoodList';
+import FoodRecipe from './FoodRecipe'
 
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isEmptyState: true, isShowRecipeState: false, index: -1
+        }
+    }
+
+    handleClick(i) {
+        this.setState({
+            isEmptyState: false, isShowRecipeState: true, index: i,
+        });
+    }
+
+    handleClickBack() {
+        this.setState({
+            isEmptyState: true, isShowRecipeState: false, index: -1,
+        });
+    }
+
+    render() {
+        if (this.state.isShowRecipeState) { return <div><FoodRecipe index={this.state.index} onClick={() => this.handleClickBack()} /></div> }
+        else {
+            return (
+                <FoodList name="Lakshmi-bhavan" onClick={(i) => this.handleClick(i)} />
+            )
+        }
+    }
+}
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <App />,
+    document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
